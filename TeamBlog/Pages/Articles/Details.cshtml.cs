@@ -31,7 +31,9 @@ namespace TeamBlog.Pages.Articles
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            Article? _article = await Context.Article.FirstOrDefaultAsync(m => m.ID == id);
+            Article? _article = await Context.Article
+                .Include(a => a.Category)
+                .FirstOrDefaultAsync(m => m.ID == id);
 
             if (_article == null)
             {
@@ -56,8 +58,9 @@ namespace TeamBlog.Pages.Articles
 
         public async Task<IActionResult> OnPostAsync(int id, ArticleStatus status)
         {
-            var article = await Context.Article.FirstOrDefaultAsync(
-                                                      m => m.ID == id);
+            var article = await Context.Article
+                .Include(a => a.Category)
+                .FirstOrDefaultAsync(m => m.ID == id);
 
             if (article == null)
             {

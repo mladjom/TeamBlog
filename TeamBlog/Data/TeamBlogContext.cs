@@ -11,6 +11,7 @@ namespace TeamBlog.Data
         {
         }
 
-        public DbSet<Article>? Article { get; set; }
+        public DbSet<Article> Article { get; set; }
+        public DbSet<Category> Category { get; set; }
     }
 }

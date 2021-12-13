@@ -13,7 +13,7 @@ namespace TeamBlog.Pages.Articles
     {
         private readonly TeamBlogContext _context;
 
-        public IndexModel(TeamBlogContext context, 
+        public IndexModel(TeamBlogContext context,
             IAuthorizationService authorizationService,
             UserManager<IdentityUser> userManager)
             : base(context, authorizationService, userManager)
@@ -21,7 +21,7 @@ namespace TeamBlog.Pages.Articles
             _context = context;
         }
 
-        public IList<Article> Article { get;set; }
+        public IList<Article> Article { get; set; }
 
         public async Task OnGetAsync()
         {
@@ -41,7 +41,8 @@ namespace TeamBlog.Pages.Articles
                                             || c.OwnerID == currentUserId);
             }
 
-            Article = await articles.ToListAsync();
+            Article = await articles
+                .Include(a => a.Category).ToListAsync();
         }
     }
 }

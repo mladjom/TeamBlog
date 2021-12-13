@@ -98,12 +98,26 @@ namespace TeamBlog.Data
                 return;   // DB has been seeded
             }
 
+
+            context.Category.AddRange(
+                new Category
+                {
+                    Name = "Cat1"
+                },
+                new Category
+                {
+                    Name = "Cat2"
+                }
+                ) ;
+            context.SaveChanges();
+
+
             context.Article.AddRange(
                 new Article
                 {
                     Title = "When Harry Met Sally",
                     ReleaseDate = DateTime.Parse("1989-2-12"),
-                    Genre = "Romantic Comedy",
+                    CategoryID = 1,
                     Price = 7.99M,
                     Status = ArticleStatus.Approved,
                     OwnerID = adminID
@@ -113,7 +127,7 @@ namespace TeamBlog.Data
                 {
                     Title = "Ghostbusters ",
                     ReleaseDate = DateTime.Parse("1984-3-13"),
-                    Genre = "Comedy",
+                    CategoryID = 2,
                     Price = 8.99M,
                     Status = ArticleStatus.Submitted,
                     OwnerID = adminID
@@ -123,7 +137,7 @@ namespace TeamBlog.Data
                 {
                     Title = "Ghostbusters 2",
                     ReleaseDate = DateTime.Parse("1986-2-23"),
-                    Genre = "Comedy",
+                    CategoryID = 1,
                     Price = 9.99M,
                     Status = ArticleStatus.Rejected,
                     OwnerID = adminID
@@ -133,7 +147,7 @@ namespace TeamBlog.Data
                 {
                     Title = "Rio Bravo",
                     ReleaseDate = DateTime.Parse("1959-4-15"),
-                    Genre = "Western",
+                    CategoryID = 2,
                     Price = 3.99M,
                     Status = ArticleStatus.Approved,
                     OwnerID = adminID

@@ -20,10 +20,13 @@
                 @Html.DisplayNameFor(model => model.Article[0].ReleaseDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Article[0].Genre)
+                @Html.DisplayNameFor(model => model.Article[0].Category)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Article[0].Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Article[0].OwnerID)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Article[0].Status)
@@ -43,10 +46,13 @@
                     @Html.DisplayFor(modelItem => item.ReleaseDate)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Genre)
+                    @Html.DisplayFor(modelItem => item.Category.Name)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OwnerID)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Status)
@@ -65,11 +71,11 @@
                    User, item,
                    ArticleOperations.Delete)).Succeeded)
                     {
-                        <text> | </text>
                         <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+                        <text> | </text>
                     }
 
-                    <a asp-page="./Details" asp-route-id="@item.ID">Details</a> 
+                    <a asp-page="./Details" asp-route-id="@item.ID">Details</a>
                 </td>
             </tr>
         }

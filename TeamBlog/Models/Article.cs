@@ -11,6 +11,14 @@ namespace TeamBlog.Models
         [Required]
         public string Title { get; set; } = string.Empty;
 
+        [Required]    
+        public string Content { get; set; } = string.Empty;
+
+        [MaxLength(140)]
+        [Required]
+        public string Excerpt { get; set; } = string.Empty;
+
+
         [Display(Name = "Release Date")]
         [DataType(DataType.Date)]
         public DateTime ReleaseDate { get; set; }
@@ -26,6 +34,9 @@ namespace TeamBlog.Models
         public string? OwnerID { get; set; }
 
         public ArticleStatus Status { get; set; }
+
+        public int CategoryID { get; set; }
+        public Category Category { get; set; }
     }
 
     public enum ArticleStatus

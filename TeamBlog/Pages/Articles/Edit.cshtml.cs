@@ -27,13 +27,15 @@ namespace TeamBlog.Pages.Articles
             _context = context;
         }
 
+
         [BindProperty]
         public Article Article { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            Article? article = await Context.Article.FirstOrDefaultAsync(
-                                                         m => m.ID == id);
+            Article? article = await Context.Article
+                .Include(a => a.Category)
+                .FirstOrDefaultAsync(m => m.ID == id);
 
             if (article == null)
             {
@@ -51,6 +53,8 @@ namespace TeamBlog.Pages.Articles
                 return Forbid();
             }
 
+            ViewData["CategoryID"] = new SelectList(_context.Category, "ID", "Name");
+            ViewData["OwnerID"] = new SelectList(_context.Users, "Id", "UserName");
             return Page();
         }
 

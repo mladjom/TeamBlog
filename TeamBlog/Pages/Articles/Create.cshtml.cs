@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using TeamBlog.Authorization;
 using TeamBlog.Data;
 using TeamBlog.Models;
@@ -22,6 +23,7 @@ namespace TeamBlog.Pages.Articles
 
         public IActionResult OnGet()
         {
+            ViewData["CategoryID"] = new SelectList(_context.Category, "ID", "Name");
             return Page();
         }
 
