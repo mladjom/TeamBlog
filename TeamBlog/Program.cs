@@ -36,9 +36,6 @@ builder.Services.AddAuthorization(options =>
 
 builder.Services.AddRazorPages();
 
-
-
-
 //builder.Services.AddControllersWithViews();
 
 builder.Services.Configure<IdentityOptions>(options =>

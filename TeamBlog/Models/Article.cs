@@ -11,9 +11,13 @@ namespace TeamBlog.Models
         [Required]
         public string Title { get; set; } = string.Empty;
 
+        [DataType(DataType.MultilineText)]
+        [MinLength(3)]
         [Required]    
         public string Content { get; set; } = string.Empty;
 
+        [DataType(DataType.MultilineText)]
+        [MinLength(3)]
         [MaxLength(140)]
         [Required]
         public string Excerpt { get; set; } = string.Empty;
@@ -23,7 +27,10 @@ namespace TeamBlog.Models
         [DataType(DataType.Date)]
         public DateTime ReleaseDate { get; set; }
 
-        public string Genre { get; set; } = string.Empty;
+        [Display(Name = "Published On")]
+        [DataType(DataType.Date)]
+        public DateTime PubDate  { get; set; }
+
 
         [Range(1, 100)]
         [DataType(DataType.Currency)]
