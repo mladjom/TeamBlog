@@ -16,7 +16,6 @@ namespace TeamBlog.Pages.Articles
 {
     public class EditModel : BaseArticleModel
     {
-        private readonly TeamBlogContext _context;
 
         public EditModel(
             TeamBlogContext context,
@@ -24,7 +23,6 @@ namespace TeamBlog.Pages.Articles
             UserManager<IdentityUser> userManager)
             : base(context, authorizationService, userManager)
         {
-            _context = context;
         }
 
 
@@ -33,9 +31,9 @@ namespace TeamBlog.Pages.Articles
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            Article? article = await Context.Article
+            Article article = await Context.Article
                 .Include(a => a.Category)
-                .FirstOrDefaultAsync(m => m.ID == id);
+                .FirstOrDefaultAsync(m => m.ArticleID == id);
 
             if (article == null)
             {
@@ -43,7 +41,6 @@ namespace TeamBlog.Pages.Articles
             }
 
             Article = article;
-
 
             var isAuthorized = await AuthorizationService.AuthorizeAsync(
                                                       User, Article,
@@ -53,8 +50,8 @@ namespace TeamBlog.Pages.Articles
                 return Forbid();
             }
 
-            ViewData["CategoryID"] = new SelectList(_context.Category, "ID", "Name");
-            ViewData["OwnerID"] = new SelectList(_context.Users, "Id", "UserName");
+            ViewData["CategoryID"] = new SelectList(Context.Category, "CategoryID", "Name");
+            ViewData["OwnerID"] = new SelectList(Context.Users, "Id", "UserName");
             return Page();
         }
 
@@ -69,8 +66,8 @@ namespace TeamBlog.Pages.Articles
 
 
             // Fetch Article from DB to get OwnerID.
-            var article = await _context.Article.AsNoTracking()
-                .FirstOrDefaultAsync(m => m.ID == id);
+            var article = await Context.Article.AsNoTracking()
+                .FirstOrDefaultAsync(m => m.ArticleID == id);
 
             if (article == null)
             {
@@ -90,7 +87,7 @@ namespace TeamBlog.Pages.Articles
 
             Article.OwnerID = article.OwnerID;
 
-            _context.Attach(Article).State = EntityState.Modified;
+            Context.Attach(Article).State = EntityState.Modified;
 
 
             if (Article.Status == ArticleStatus.Approved)
@@ -111,11 +108,11 @@ namespace TeamBlog.Pages.Articles
 
             try
             {
-                await _context.SaveChangesAsync();
+                await Context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ArticleExists(Article.ID))
+                if (!ArticleExists(Article.ArticleID))
                 {
                     return NotFound();
                 }
@@ -130,7 +127,7 @@ namespace TeamBlog.Pages.Articles
 
         private bool ArticleExists(int id)
         {
-            return _context.Article.Any(e => e.ID == id);
+            return Context.Article.Any(e => e.ArticleID == id);
         }
     }
 }

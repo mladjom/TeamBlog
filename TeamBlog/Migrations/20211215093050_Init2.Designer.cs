@@ -12,8 +12,8 @@ using TeamBlog.Data;
 namespace TeamBlog.Migrations
 {
     [DbContext(typeof(TeamBlogContext))]
-    [Migration("20211214061114_Updates")]
-    partial class Updates
+    [Migration("20211215093050_Init2")]
+    partial class Init2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -228,11 +228,11 @@ namespace TeamBlog.Migrations
 
             modelBuilder.Entity("TeamBlog.Models.Article", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("ArticleID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ArticleID"), 1L, 1);
 
                     b.Property<int>("CategoryID")
                         .HasColumnType("int");
@@ -246,17 +246,10 @@ namespace TeamBlog.Migrations
                         .HasMaxLength(140)
                         .HasColumnType("nvarchar(140)");
 
-                    b.Property<string>("Genre")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("OwnerID")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<DateTime>("ReleaseDate")
+                    b.Property<DateTime>("PubDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("Status")
@@ -264,10 +257,10 @@ namespace TeamBlog.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
-                    b.HasKey("ID");
+                    b.HasKey("ArticleID");
 
                     b.HasIndex("CategoryID");
 
@@ -276,17 +269,17 @@ namespace TeamBlog.Migrations
 
             modelBuilder.Entity("TeamBlog.Models.Category", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("CategoryID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryID"), 1L, 1);
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
-                    b.HasKey("ID");
+                    b.HasKey("CategoryID");
 
                     b.ToTable("Category");
                 });

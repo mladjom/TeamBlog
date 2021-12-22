@@ -12,8 +12,8 @@ using TeamBlog.Data;
 namespace TeamBlog.Migrations
 {
     [DbContext(typeof(TeamBlogContext))]
-    [Migration("20211212114152_Cats")]
-    partial class Cats
+    [Migration("20211214065126_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -237,17 +237,19 @@ namespace TeamBlog.Migrations
                     b.Property<int>("CategoryID")
                         .HasColumnType("int");
 
-                    b.Property<string>("Genre")
+                    b.Property<string>("Content")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Excerpt")
+                        .IsRequired()
+                        .HasMaxLength(140)
+                        .HasColumnType("nvarchar(140)");
 
                     b.Property<string>("OwnerID")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<DateTime>("ReleaseDate")
+                    b.Property<DateTime>("PubDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("Status")

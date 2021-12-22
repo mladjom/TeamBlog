@@ -14,13 +14,6 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<TeamBlogContext>(options =>
     options.UseSqlServer(connectionString));
 
-
-//builder.Services.AddDbContext<TeamBlogContext>(options =>
-
-//    options.UseSqlServer(builder.Configuration.GetConnectionString("TeamBlogContext")));
-
-
-
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
@@ -95,7 +88,7 @@ using (var scope = app.Services.CreateScope())
     // TODO Test this
     //var testUserPw = "Ab123_";
 
-    await SeedData.Initialize(services, testUserPw);
+    //await SeedData.Initialize(services, testUserPw);
 }
 
 

@@ -10,7 +10,7 @@ namespace TeamBlog.Pages.Articles
 {
     public class CreateModel : BaseArticleModel
     {
-        private readonly TeamBlogContext _context;
+        //private readonly TeamBlogContext _context;
 
         public CreateModel(
             TeamBlogContext context,
@@ -18,12 +18,12 @@ namespace TeamBlog.Pages.Articles
             UserManager<IdentityUser> userManager)
             : base(context, authorizationService, userManager)
         {
-            _context = context;
+           // _context = context;
         }
 
         public IActionResult OnGet()
         {
-            ViewData["CategoryID"] = new SelectList(_context.Category, "ID", "Name");
+            ViewData["CategoryID"] = new SelectList(Context.Category, "CategoryID", "Name");
             return Page();
         }
 
@@ -37,14 +37,19 @@ namespace TeamBlog.Pages.Articles
             {
                 return Page();
             }
+            
+            Article.OwnerID = UserManager.GetUserId(User);
 
             var isAuthorized = await AuthorizationService.AuthorizeAsync(
                                                   User, Article,
                                                   ArticleOperations.Create);
+            if (!isAuthorized.Succeeded)
+            {
+                return Forbid();
+            }
 
-
-            _context.Article.Add(Article);
-            await _context.SaveChangesAsync();
+            Context.Article.Add(Article);
+            await Context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
         }

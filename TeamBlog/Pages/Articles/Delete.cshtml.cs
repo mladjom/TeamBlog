@@ -33,7 +33,7 @@ namespace TeamBlog.Pages.Articles
         {
             Article? article = await Context.Article
                 .Include(a => a.Category)
-                .FirstOrDefaultAsync(m => m.ID == id);
+                .FirstOrDefaultAsync(m => m.ArticleID == id);
 
             if (article == null)
             {
@@ -56,7 +56,7 @@ namespace TeamBlog.Pages.Articles
         {
             var article = await Context
                 .Article.AsNoTracking()
-                .FirstOrDefaultAsync(m => m.ID == id);
+                .FirstOrDefaultAsync(m => m.ArticleID == id);
 
 
             if (article == null)

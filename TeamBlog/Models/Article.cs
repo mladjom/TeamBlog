@@ -1,18 +1,20 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Web.Mvc;
 
 namespace TeamBlog.Models
 {
     public class Article
     {
-        public int ID { get; set; }
+        public int ArticleID { get; set; }
 
-        [StringLength(60, MinimumLength = 3)]
+        [StringLength(50, MinimumLength = 3)]
         [Required]
         public string Title { get; set; } = string.Empty;
 
         [DataType(DataType.MultilineText)]
         [MinLength(3)]
+        [AllowHtml]
         [Required]    
         public string Content { get; set; } = string.Empty;
 
@@ -22,20 +24,13 @@ namespace TeamBlog.Models
         [Required]
         public string Excerpt { get; set; } = string.Empty;
 
-
-        [Display(Name = "Release Date")]
-        [DataType(DataType.Date)]
-        public DateTime ReleaseDate { get; set; }
-
         [Display(Name = "Published On")]
         [DataType(DataType.Date)]
         public DateTime PubDate  { get; set; }
 
+        public string Picture { get; set; }
 
-        [Range(1, 100)]
-        [DataType(DataType.Currency)]
-        [Column(TypeName = "decimal(18, 2)")]
-        public decimal Price { get; set; }
+        public bool IsFeatured { get; set; } = false;
 
         // user ID from AspNetUser table.
         public string? OwnerID { get; set; }

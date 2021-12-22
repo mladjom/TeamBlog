@@ -31,9 +31,9 @@ namespace TeamBlog.Pages.Articles
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            Article? _article = await Context.Article
+            Article _article = await Context.Article
                 .Include(a => a.Category)
-                .FirstOrDefaultAsync(m => m.ID == id);
+                .FirstOrDefaultAsync(m => m.ArticleID == id);
 
             if (_article == null)
             {
@@ -60,7 +60,7 @@ namespace TeamBlog.Pages.Articles
         {
             var article = await Context.Article
                 .Include(a => a.Category)
-                .FirstOrDefaultAsync(m => m.ID == id);
+                .FirstOrDefaultAsync(m => m.ArticleID == id);
 
             if (article == null)
             {

@@ -1,10 +1,40 @@
 ﻿@page
-@model IndexModel
+@model TeamBlog.Pages.Articles.IndexModel
 @{
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="text-center my-5">
+    <h1 class="fw-bolder">Welcome to TeamBlog Home!</h1>
+    <p class="lead mb-0">A Bootstrap 5 starter layout for your next blog homepage</p>
 </div>
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="row">
+            @foreach (var item in Model.Article)
+            {
+                <div class="col-lg-6">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <div class="small text-muted">
+                                @Html.DisplayFor(modelItem => item.PubDate)
+                            </div>
+                            @Html.DisplayFor(modelItem => item.Category.Name)
+                            @Html.DisplayFor(modelItem => item.OwnerID)
+
+                            <h2 class="card-title">
+                                @Html.DisplayFor(modelItem => item.Title)
+                            </h2>
+                            <p class="card-text">
+                                @Html.DisplayFor(modelItem => item.Excerpt)
+                            </p>
+                            <a class="btn btn-primary" asp-page="./Articles/Details" asp-route-id="@item.ArticleID">Read more →</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
