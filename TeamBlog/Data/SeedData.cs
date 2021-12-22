@@ -126,7 +126,7 @@ namespace TeamBlog.Data
                     Excerpt = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et ma",
                     PubDate = DateTime.Now.AddDays(-1),
                     OwnerID = adminID,
-                    Status = ArticleStatus.Approved,
+                    Status = ArticleStatus.Rejected,
                     CategoryID = 1
                 },
 
@@ -137,7 +137,7 @@ namespace TeamBlog.Data
                     Excerpt = "But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete accoun",
                     PubDate = DateTime.Now.AddDays(-2),
                     OwnerID = adminID,
-                    Status = ArticleStatus.Approved,
+                    Status = ArticleStatus.Submitted,
                     CategoryID = 2
                 },
 
@@ -159,7 +159,7 @@ namespace TeamBlog.Data
                     Excerpt = "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in.",
                     PubDate = DateTime.Now.AddDays(-4),
                     OwnerID = adminID,
-                    Status = ArticleStatus.Approved,
+                    Status = ArticleStatus.Submitted,
                     CategoryID = 1
                 },
                 new Article

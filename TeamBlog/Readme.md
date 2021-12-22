@@ -18,7 +18,8 @@ editor: editor@site.test pass: Ab123_
 - [ ] Finish views  
 - [ ] Upload and display featured image 
 - [ ] Display articles per category
-- [ ] 
+- [ ] Update seed
+- [ ]
 
 ## Usefull commands
 
