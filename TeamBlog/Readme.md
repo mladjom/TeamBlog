@@ -13,7 +13,7 @@ On first run program will seed database with admin and editor users, default cat
 admin: admin@site.test pass: Ab123_
 editor: editor@site.test pass: Ab123_
 
-### Todo
+### TODO
 
 - [ ] Finish views  
 - [ ] Upload and display featured image 
