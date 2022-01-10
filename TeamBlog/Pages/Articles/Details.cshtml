@@ -11,29 +11,26 @@
             <header class="mb-4">
                 <h1 class="fw-bolder mb-1">
                     @Html.DisplayFor(model => model.Article.Title)
-                    <span class="badge bg-secondary">
-                        @if ((await AuthorizationService.AuthorizeAsync(
-                        User, Model.Article,
-                        ArticleOperations.Update)).Succeeded)
-                        {
-                            <a asp-page="./Edit" asp-route-id="@Model.Article.ArticleID">Edit</a>
-
-                        }
-                    </span>
                 </h1>
                 <div class="text-muted fst-italic mb-2">
-                    Posted on @Html.DisplayFor(model => model.Article.PubDate),  by Start Bootstrap
+                    Posted on @Html.DisplayFor(model => model.Article.PubDate),
+                    by @Html.Raw(Model.Article.OwnerID)
 
                 </div>
                 <a class="badge bg-secondary text-decoration-none link-light" href="#!">
                     @Html.DisplayFor(model => model.Article.Category.Name)
                 </a>
             </header>
-            <figure class="mb-4">
-                @Html.DisplayFor(model => model.Article.FileName)
-                @Html.DisplayFor(model => model.Article.File)
+            @if (Model.Article.FileName != null)
+            {
+                <figure class="mb-4">
+                    <img class="card-img-top"
+                     src="data:image/jpeg;base64,@Convert.ToBase64String(Model.Article.File)"
+                     alt="Model.Article.FileName">
+                </figure>
 
-            </figure>
+            }
+
             <section class="mb-5">
                 @Html.Raw(Model.Article.Content)
             </section>
@@ -63,6 +60,17 @@
                     </form>
                 }
             }
+
+            @if ((await AuthorizationService.AuthorizeAsync(
+            User, Model.Article,
+            ArticleOperations.Update)).Succeeded)
+            {
+                <a asp-page="./Edit" asp-route-id="@Model.Article.ArticleID" class="btn btn-xs btn-dark">
+                    Edit
+                </a>
+
+            }
+
         </article>
     </div>
 </div>

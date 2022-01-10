@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TeamBlog.Authorization;
 using TeamBlog.Data;
@@ -42,7 +43,8 @@ namespace TeamBlog.Pages.Articles
             }
 
             Article = await articles
-                .Include(a => a.Category).ToListAsync();
+                .Include(a => a.Category)
+                .ToListAsync();
         }
     }
 }

@@ -15,6 +15,14 @@
             {
                 <div class="col-lg-6">
                     <div class="card mb-4">
+                        @if (item.FileName != null)
+                        {
+                            <a asp-page="./Articles/Details" asp-route-id="@item.ArticleID">
+                                <img class="card-img-top"
+                             src="data:image/jpeg;base64,@Convert.ToBase64String(item.File)"
+                             alt="Item.Filename">
+                            </a>
+                        }
                         <div class="card-body">
                             <div class="small text-muted">
                                 @Html.DisplayFor(modelItem => item.PubDate)
@@ -25,6 +33,7 @@
                             <h2 class="card-title">
                                 @Html.DisplayFor(modelItem => item.Title)
                             </h2>
+
                             <p class="card-text">
                                 @Html.DisplayFor(modelItem => item.Excerpt)
                             </p>

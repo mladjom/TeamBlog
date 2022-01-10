@@ -64,7 +64,7 @@ namespace TeamBlog.Pages.Articles
                 var width = img.Width;
                 if (width > 900)
                 {
-                    var ratio = (double)width / (double)height;
+                    var ratio = (double)height / (double)width;
                     var newWidth = 900;
                     var newHeight = (int)(900 * ratio);
                     var resizedImage = new Bitmap(img, newWidth, newHeight);
