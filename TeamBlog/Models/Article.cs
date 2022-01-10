@@ -28,7 +28,11 @@ namespace TeamBlog.Models
         [DataType(DataType.Date)]
         public DateTime PubDate  { get; set; }
 
-        public string Picture { get; set; }
+        public string FileName { get; set; }
+        public byte[] File { get; set; }
+
+        [NotMapped]
+        public IFormFile FileForm { get; set; }
 
         public bool IsFeatured { get; set; } = false;
 

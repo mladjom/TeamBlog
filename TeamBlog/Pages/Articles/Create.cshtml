@@ -10,7 +10,7 @@
     <div class="col-md-8">
         <h1>Create New Article</h1>
         <hr />
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group mb-3">
                 <label asp-for="Article.Title" class="control-label"></label>
@@ -33,9 +33,15 @@
                 <span asp-validation-for="Article.PubDate" class="text-danger"></span>
             </div>
             <div class="form-group mb-3">
-                <label asp-for="Article.Picture" class="control-label"></label>
-                <input asp-for="Article.Picture" class="form-control" />
-                <span asp-validation-for="Article.Picture" class="text-danger"></span>
+                <label asp-for="Article.FileName" class="control-label"></label>
+                <input type="file" onchange="getFile(this)" 
+                asp-for="Article.FileName" name="Article.FileForm" class="form-control" />
+                <span asp-validation-for="Article.FileName" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Article.File" class="control-label"></label>
+                <img width="850" />
+                <span asp-validation-for="Article.File" class="text-danger"></span>
             </div>
             <div class="form-group form-check mb-3">
                 <label class="form-check-label">
@@ -59,7 +65,20 @@
 </div>
 
 @section Scripts {
+    <script>
+    function getFile(data) {
+        const image = document.querySelector('img');
+        const reader = new FileReader();
+        const file = data.files[0];
+
+        reader.addEventListener("load", function () {
+            image.src = reader.result;
+        }, false);
+
+        reader.readAsDataURL(file);
+    }
+    </script>
     @{
-    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
-}
+

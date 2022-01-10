@@ -29,7 +29,7 @@ builder.Services.AddAuthorization(options =>
 
 builder.Services.AddRazorPages();
 
-//builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews();
 
 builder.Services.Configure<IdentityOptions>(options =>
 {
@@ -85,20 +85,12 @@ using (var scope = app.Services.CreateScope())
     // dotnet user-secrets set SeedUserPW <pw>
 
     var testUserPw = builder.Configuration.GetValue<string>("SeedUserPW");
-    // TODO Test this
+    //  Test this
     //var testUserPw = "Ab123_";
 
-    //await SeedData.Initialize(services, testUserPw);
+    await SeedData.Initialize(services, testUserPw);
 }
 
-
-// Seeding Data
-//using (var scope = app.Services.CreateScope())
-//{
-//    var services = scope.ServiceProvider;
-
-//    SeedData.Initialize(services);
-//}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TeamBlog.Data;
 
@@ -11,9 +12,10 @@ using TeamBlog.Data;
 namespace TeamBlog.Migrations
 {
     [DbContext(typeof(TeamBlogContext))]
-    partial class TeamBlogContextModelSnapshot : ModelSnapshot
+    [Migration("20211222080158_Image")]
+    partial class Image
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

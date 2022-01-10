@@ -23,13 +23,18 @@
                 </h1>
                 <div class="text-muted fst-italic mb-2">
                     Posted on @Html.DisplayFor(model => model.Article.PubDate),  by Start Bootstrap
-                     
+
                 </div>
                 <a class="badge bg-secondary text-decoration-none link-light" href="#!">
                     @Html.DisplayFor(model => model.Article.Category.Name)
                 </a>
             </header>
-            <section class="mb-5">              
+            <figure class="mb-4">
+                @Html.DisplayFor(model => model.Article.FileName)
+                @Html.DisplayFor(model => model.Article.File)
+
+            </figure>
+            <section class="mb-5">
                 @Html.Raw(Model.Article.Content)
             </section>
 

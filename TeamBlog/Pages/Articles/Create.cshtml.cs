@@ -5,20 +5,27 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using TeamBlog.Authorization;
 using TeamBlog.Data;
 using TeamBlog.Models;
+using System.IO;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using System;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace TeamBlog.Pages.Articles
 {
     public class CreateModel : BaseArticleModel
     {
-        //private readonly TeamBlogContext _context;
-
         public CreateModel(
             TeamBlogContext context,
             IAuthorizationService authorizationService,
             UserManager<IdentityUser> userManager)
             : base(context, authorizationService, userManager)
         {
-           // _context = context;
         }
 
         public IActionResult OnGet()
@@ -31,7 +38,7 @@ namespace TeamBlog.Pages.Articles
         public Article Article { get; set; }
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(List<IFormFile> files)
         {
             if (!ModelState.IsValid)
             {
@@ -46,6 +53,36 @@ namespace TeamBlog.Pages.Articles
             if (!isAuthorized.Succeeded)
             {
                 return Forbid();
+            }
+
+            if (Article.FileForm != null)
+            {
+                byte[] bytes = null;
+
+                var img = Image.FromStream(Article.FileForm.OpenReadStream());
+                var height = img.Height;
+                var width = img.Width;
+                if (width > 900)
+                {
+                    var ratio = (double)width / (double)height;
+                    var newWidth = 900;
+                    var newHeight = (int)(900 * ratio);
+                    var resizedImage = new Bitmap(img, newWidth, newHeight);
+                    using var imageStream = new MemoryStream();
+                    resizedImage.Save(imageStream, ImageFormat.Jpeg);
+                    bytes = imageStream.ToArray();
+                }
+                else
+                {
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        Article.FileForm.CopyTo(ms);
+                        bytes = ms.ToArray();
+                    }
+                }
+
+                Article.File = bytes;
+                Article.FileName = Article.FileForm.FileName;
             }
 
             Context.Article.Add(Article);
