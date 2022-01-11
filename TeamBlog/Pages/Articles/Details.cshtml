@@ -61,7 +61,7 @@
                 }
             }
 
-            @if ((await AuthorizationService.AuthorizeAsync(
+                        @if ((await AuthorizationService.AuthorizeAsync(
             User, Model.Article,
             ArticleOperations.Update)).Succeeded)
             {
@@ -70,7 +70,6 @@
                 </a>
 
             }
-
         </article>
     </div>
 </div>

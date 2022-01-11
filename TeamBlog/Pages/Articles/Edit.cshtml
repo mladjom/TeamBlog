@@ -5,13 +5,12 @@
     ViewData["Title"] = "Edit Article";
 }
 
-<h1>Edit</h1>
-
-<h4>Article</h4>
-<hr />
 <div class="row justify-content-center">
     <div class="col-md-8">
-        <form method="post">
+        <h1>Edit</h1>
+        <h4>@Html.DisplayFor(model => model.Article.Title)</h4>
+        <hr />
+        <form method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Article.ArticleID" />
             <div class="form-group mb-3">
@@ -20,20 +19,56 @@
                 <span asp-validation-for="Article.Title" class="text-danger"></span>
             </div>
             <div class="form-group mb-3">
+                <label asp-for="Article.Content" class="control-label"></label>
+                <textarea asp-for="Article.Content" class="form-control"></textarea>
+                <span asp-validation-for="Article.Content" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Article.Excerpt" class="control-label"></label>
+                <textarea asp-for="Article.Excerpt" class="form-control"></textarea>
+                <span asp-validation-for="Article.Excerpt" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Article.PubDate" class="control-label"></label>
+                <input asp-for="Article.PubDate" class="form-control" />
+                <span asp-validation-for="Article.PubDate" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Article.FileName" class="control-label"></label>
+                <input type="file" onchange="getFile(this)"
+                       asp-for="Article.FileName" name="Article.FileForm" class="form-control" />
+                <span asp-validation-for="Article.FileName" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Article.File" class="control-label"></label>
+                @if (Model.Article.FileName != null)
+                {
+                    <img width="850"
+                     src="data:image/jpeg;base64,@Convert.ToBase64String(Model.Article.File)"
+                     alt="Model.Article.FileName">
+                }
+                <span asp-validation-for="Article.File" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Article.Status" class="control-label"></label>
+                <select asp-for="Article.Status" class="form-control" asp-items="Html.GetEnumSelectList<ArticleStatus>()">
+                </select>
+                <span asp-validation-for="Article.Status" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
                 <label asp-for="Article.CategoryID" class="control-label"></label>
                 <select asp-for="Article.CategoryID" class="form-control" asp-items="ViewBag.CategoryID"></select>
                 <span asp-validation-for="Article.CategoryID" class="text-danger"></span>
             </div>
             <div class="form-group mb-3">
-                <label asp-for="Article.Status" class="control-label"></label>
-                <select asp-for="Article.Status" class="form-control" asp-items="Html.GetEnumSelectList<ArticleStatus>()">
-                    </select>
-                <span asp-validation-for="Article.Status" class="text-danger"></span>
-            </div>
-            <div class="form-group mb-3">
                 <label asp-for="Article.OwnerID" class="control-label"></label>
                 <select asp-for="Article.OwnerID" class="form-control" asp-items="ViewBag.OwnerID"></select>
                 <span asp-validation-for="Article.OwnerID" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check mb-3">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Article.IsFeatured" /> @Html.DisplayNameFor(model => model.Article.IsFeatured)
+                </label>
             </div>
             <div class="form-group mb-3">
                 <input type="submit" value="Save" class="btn btn-primary" />
@@ -47,6 +82,19 @@
 </div>
 
 @section Scripts {
+<script>
+    function getFile(data) {
+        const image = document.querySelector('img');
+        const reader = new FileReader();
+        const file = data.files[0];
+
+        reader.addEventListener("load", function () {
+            image.src = reader.result;
+        }, false);
+
+        reader.readAsDataURL(file);
+    }
+</script>
     @{
     await Html.RenderPartialAsync("_ValidationScriptsPartial");
 }

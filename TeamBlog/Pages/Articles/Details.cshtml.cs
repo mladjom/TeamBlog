@@ -16,7 +16,6 @@ namespace TeamBlog.Pages.Articles
     [AllowAnonymous]
     public class DetailsModel : BaseArticleModel
     {
-        private readonly TeamBlogContext _context;
 
         public DetailsModel(
             TeamBlogContext context,
@@ -24,22 +23,23 @@ namespace TeamBlog.Pages.Articles
             UserManager<IdentityUser> userManager)
             : base(context, authorizationService, userManager)
         {
-            _context = context;
         }
 
         public Article Article { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            Article _article = await Context.Article
+            Article article = await Context.Article
                 .Include(a => a.Category)
+
                 .FirstOrDefaultAsync(m => m.ArticleID == id);
 
-            if (_article == null)
+            if (article == null)
             {
                 return NotFound();
             }
-            Article = _article;
+
+            Article = article;
 
             var isAuthorized = User.IsInRole(Constants.ArticleEditorRole) ||
                                User.IsInRole(Constants.ArticleAdministratorRole);

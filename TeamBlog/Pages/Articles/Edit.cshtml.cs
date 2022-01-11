@@ -108,6 +108,7 @@ namespace TeamBlog.Pages.Articles
 
             try
             {
+                Context.Update(Article);
                 await Context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
