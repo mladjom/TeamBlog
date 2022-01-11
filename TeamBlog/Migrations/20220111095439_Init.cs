@@ -52,13 +52,13 @@ namespace TeamBlog.Migrations
                 name: "Category",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", nullable: false)
+                    CategoryID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Category", x => x.ID);
+                    table.PrimaryKey("PK_Category", x => x.CategoryID);
                 });
 
             migrationBuilder.CreateTable(
@@ -171,24 +171,27 @@ namespace TeamBlog.Migrations
                 name: "Article",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", nullable: false)
+                    ArticleID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Excerpt = table.Column<string>(type: "nvarchar(140)", maxLength: 140, nullable: false),
                     PubDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    FileName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    File = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
+                    IsFeatured = table.Column<bool>(type: "bit", nullable: false),
                     OwnerID = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Status = table.Column<int>(type: "int", nullable: false),
                     CategoryID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Article", x => x.ID);
+                    table.PrimaryKey("PK_Article", x => x.ArticleID);
                     table.ForeignKey(
                         name: "FK_Article_Category_CategoryID",
                         column: x => x.CategoryID,
                         principalTable: "Category",
-                        principalColumn: "ID",
+                        principalColumn: "CategoryID",
                         onDelete: ReferentialAction.Cascade);
                 });
 

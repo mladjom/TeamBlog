@@ -6,6 +6,7 @@ namespace TeamBlog.Models
 {
     public class Article
     {
+
         public int ArticleID { get; set; }
 
         [StringLength(50, MinimumLength = 3)]
@@ -43,6 +44,7 @@ namespace TeamBlog.Models
 
         public int CategoryID { get; set; }
         public Category Category { get; set; }
+
     }
 
     public enum ArticleStatus

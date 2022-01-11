@@ -12,14 +12,14 @@ using TeamBlog.Data;
 namespace TeamBlog.Migrations
 {
     [DbContext(typeof(TeamBlogContext))]
-    [Migration("20211215093050_Init2")]
-    partial class Init2
+    [Migration("20220111095439_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.0")
+                .HasAnnotation("ProductVersion", "6.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -245,6 +245,15 @@ namespace TeamBlog.Migrations
                         .IsRequired()
                         .HasMaxLength(140)
                         .HasColumnType("nvarchar(140)");
+
+                    b.Property<byte[]>("File")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("FileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsFeatured")
+                        .HasColumnType("bit");
 
                     b.Property<string>("OwnerID")
                         .HasColumnType("nvarchar(max)");

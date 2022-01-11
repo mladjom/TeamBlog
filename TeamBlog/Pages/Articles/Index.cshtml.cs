@@ -45,6 +45,9 @@ namespace TeamBlog.Pages.Articles
             Article = await articles
                 .Include(a => a.Category)
                 .ToListAsync();
+
+ 
+
         }
     }
 }

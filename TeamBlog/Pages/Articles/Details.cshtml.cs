@@ -29,10 +29,18 @@ namespace TeamBlog.Pages.Articles
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
+
+
+ 
+
             Article article = await Context.Article
                 .Include(a => a.Category)
-
                 .FirstOrDefaultAsync(m => m.ArticleID == id);
+
+           var user = await UserManager.FindByIdAsync(article.OwnerID);
+
+            ViewData["User"] = user;
+
 
             if (article == null)
             {
