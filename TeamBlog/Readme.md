@@ -19,6 +19,7 @@ editor: editor@site.test pass: Ab123_
 - [x] Upload and display featured image 
 - [ ] Display articles per category
 - [x] Update seed
+- []
 
 
 ## Usefull commands
