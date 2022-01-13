@@ -38,7 +38,7 @@ namespace TeamBlog.Models
         public bool IsFeatured { get; set; } = false;
 
         // user ID from AspNetUser table.
-        public string? OwnerID { get; set; }
+        public string OwnerID { get; set; }
 
         public ArticleStatus Status { get; set; }
 

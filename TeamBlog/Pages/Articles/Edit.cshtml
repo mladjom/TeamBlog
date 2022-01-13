@@ -36,7 +36,7 @@
             <div class="form-group mb-3">
                 <label asp-for="Article.FileName" class="control-label"></label>
                 <input type="file" onchange="getFile(this)"
-                       asp-for="Article.FileName" name="Article.FileForm" class="form-control" />
+                asp-for="Article.FileName" name="Article.FileForm" class="form-control" />
                 <span asp-validation-for="Article.FileName" class="text-danger"></span>
             </div>
             <div class="form-group mb-3">
@@ -46,6 +46,9 @@
                     <img width="850"
                      src="data:image/jpeg;base64,@Convert.ToBase64String(Model.Article.File)"
                      alt="Model.Article.FileName">
+                } else
+                {
+                    <img width="850" />
                 }
                 <span asp-validation-for="Article.File" class="text-danger"></span>
             </div>

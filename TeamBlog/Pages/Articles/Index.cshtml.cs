@@ -12,14 +12,12 @@ namespace TeamBlog.Pages.Articles
     [AllowAnonymous]
     public class IndexModel : BaseArticleModel
     {
-        private readonly TeamBlogContext _context;
 
         public IndexModel(TeamBlogContext context,
             IAuthorizationService authorizationService,
             UserManager<IdentityUser> userManager)
             : base(context, authorizationService, userManager)
         {
-            _context = context;
         }
 
         public IList<Article> Article { get; set; }
@@ -28,6 +26,15 @@ namespace TeamBlog.Pages.Articles
         {
             var articles = from c in Context.Article
                            select c;
+
+
+            //ViewData["OwnerID"] = new SelectList(Context.Users, "Id", "UserName");
+
+            //var user = UserManager.Users.FirstOrDefault();
+
+
+
+
 
             var isAuthorized = User.IsInRole(Constants.ArticleEditorRole) ||
                                User.IsInRole(Constants.ArticleAdministratorRole);
@@ -46,7 +53,9 @@ namespace TeamBlog.Pages.Articles
                 .Include(a => a.Category)
                 .ToListAsync();
 
- 
+            //var user = await UserManager.FindByIdAsync(Context.Article.OwnerID);
+            var user = UserManager.Users.FirstOrDefault(u => u.Id == currentUserId);
+            ViewData["User"] = user;
 
         }
     }

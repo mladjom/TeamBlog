@@ -15,10 +15,10 @@ editor: editor@site.test pass: Ab123_
 
 ### TODO
 
-- [ ] Finish views 
+- [x] Finish views 
 - [x] Upload and display featured image 
 - [ ] Display articles per category
-- [ ] Update seed
+- [x] Update seed
 
 
 ## Usefull commands

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -57,23 +59,24 @@ namespace TeamBlog.Pages.Articles
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync(int id)
+        public async Task<IActionResult> OnPostAsync(int? id)
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
+            Context.Attach(Article).State = EntityState.Modified;
 
             // Fetch Article from DB to get OwnerID.
-            var article = await Context.Article.AsNoTracking()
-                .FirstOrDefaultAsync(m => m.ArticleID == id);
+            //var article = await Context.Article.AsNoTracking()
+            //    .FirstOrDefaultAsync(m => m.ArticleID == id);
 
-            if (article == null)
-            {
-                return NotFound();
-            }
-            Article = article;
+            //if (article == null)
+            //{
+            //    return NotFound();
+            //}
+            //Article = article;
 
 
             var isAuthorized = await AuthorizationService.AuthorizeAsync(
@@ -85,10 +88,37 @@ namespace TeamBlog.Pages.Articles
                 return Forbid();
             }
 
-            Article.OwnerID = article.OwnerID;
+            if (Article.FileForm != null)
+            {
+                byte[] bytes = null;
 
-            Context.Attach(Article).State = EntityState.Modified;
+                var img = Image.FromStream(Article.FileForm.OpenReadStream());
+                var height = img.Height;
+                var width = img.Width;
+                if (width > 900)
+                {
+                    var ratio = (double)height / (double)width;
+                    var newWidth = 900;
+                    var newHeight = (int)(900 * ratio);
+                    var resizedImage = new Bitmap(img, newWidth, newHeight);
+                    using var imageStream = new MemoryStream();
+                    resizedImage.Save(imageStream, ImageFormat.Jpeg);
+                    bytes = imageStream.ToArray();
+                }
+                else
+                {
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        Article.FileForm.CopyTo(ms);
+                        bytes = ms.ToArray();
+                    }
+                }
 
+                Article.File = bytes;
+                Article.FileName = Article.FileForm.FileName;
+            }
+
+            //Article.OwnerID = article.OwnerID;
 
             if (Article.Status == ArticleStatus.Approved)
             {

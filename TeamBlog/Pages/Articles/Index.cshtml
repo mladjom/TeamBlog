@@ -30,6 +30,12 @@
                 @Html.DisplayNameFor(model => model.Article[0].Status)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Article[0].IsFeatured)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Article[0].PubDate)
+            </th>
+            <th>
             </th>
         </tr>
     </thead>
@@ -44,10 +50,17 @@
                     @Html.DisplayFor(modelItem => item.Category.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.OwnerID)
+                    @*                    @Html.DisplayFor(modelItem => item.OwnerID)
+                    *@                    @Html.Raw(ViewBag.User.UserName)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsFeatured)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PubDate)
                 </td>
                 <td>
                     @if ((await AuthorizationService.AuthorizeAsync(

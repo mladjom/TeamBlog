@@ -61,6 +61,16 @@
                 }
             }
 
+             @if ((await AuthorizationService.AuthorizeAsync(
+            User, Model.Article,
+            ArticleOperations.Update)).Succeeded)
+            {
+                <a asp-page="./Edit" asp-route-id="@Model.Article.ArticleID" class="btn btn-xs btn-dark">
+                    Edit
+                </a>
+
+            }
+
 
         </article>
     </div>
